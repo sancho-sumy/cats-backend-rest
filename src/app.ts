@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import config from 'config';
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import connect from './utils/connect.utils';
 import logger from './utils/logger.utils';
 
@@ -17,6 +19,15 @@ interface Error {
 const port = config.get<number>('server.port');
 
 const app = express();
+
+app.use(
+    cors({
+        origin: config.get('server.origin'),
+        credentials: true,
+    }),
+);
+
+app.use(cookieParser());
 
 app.use(express.json());
 

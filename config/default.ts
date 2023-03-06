@@ -4,6 +4,8 @@ dotenv.config();
 
 const SERVER_PORT = process.env.SERVER_PORT || 7070;
 
+const origin = 'http://localhost:3000';
+
 const MONGO_DB_URI = process.env.MONGO_DB_URI;
 
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
@@ -20,6 +22,7 @@ const googleOauthRedirectURL = 'http://localhost:7070/api/sessions/oauth/google'
 export default {
     server: {
         port: SERVER_PORT,
+        origin: origin,
     },
     db: {
         uri: MONGO_DB_URI,

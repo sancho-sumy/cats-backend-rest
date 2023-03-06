@@ -14,3 +14,8 @@ export async function createUserHandler(req: Request, res: Response, next: NextF
     }
 }
 
+export async function getCurrentUser(req: Request, res: Response) {
+    console.log('locals.user:', res.locals.user);
+    
+    return res.send(res.locals.user);
+}
