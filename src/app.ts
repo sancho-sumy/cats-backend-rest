@@ -20,6 +20,13 @@ const port = config.get<number>('server.port');
 
 const app = express();
 
+    // app.use((req: Request, res: Response, next: NextFunction) => {
+    //     res.setHeader('Access-Control-Allow-Origin', '*');
+    //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    //     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    //     next();
+    // });
+
 app.use(
     cors({
         origin: config.get('server.origin'),
@@ -37,13 +44,6 @@ app.listen(port, async () => {
     logger.info(`App listening on http://localhost:${port}`);
 
     await connect();
-
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        next();
-    });
 
     app.use('/api/users', userRoutes);
     app.use('/api/sessions', sessionRoutes);

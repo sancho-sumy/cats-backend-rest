@@ -38,13 +38,14 @@ export async function createUser(input: UserInput) {
 
 export async function validatePassword({ email, password }: { email: string; password: string }) {
     const user = await UserModel.findOne({ email }).exec();
-
+    
     if (!user) {
         return false;
         //! Add error handling
     }
 
     const isValid = await user.comparePassword(password);
+    console.log('validate password:', isValid);
 
     if (!isValid) {
         return false;

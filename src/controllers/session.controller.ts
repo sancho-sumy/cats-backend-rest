@@ -24,7 +24,8 @@ const refreshTokenCookieOptions: CookieOptions = {
 export async function createUserSessionHandler(req: Request, res: Response, next: NextFunction) {
     try {
         const user = await validatePassword(req.body);
-
+        console.log(user);
+        
         if (!user) {
             const error = new CustomError('Invalid email or password', { statusCode: 401 });
             throw error;
@@ -114,13 +115,15 @@ export async function googleOauthHandler(req: Request, res: Response) {
 
         const session = await createSession(user._id, req.get('user-agent') || '');
 
+        const userJson = user.toJSON();
+
         const accessToken = signJwt(
-            { ...user.toJSON, session: session._id },
+            { ...userJson, session: session._id },
             { expiresIn: config.get<string>('security.accessTokenTtl') },
         );
 
         const refreshToken = signJwt(
-            { ...user.toJSON, session: session._id },
+            { ...userJson, session: session._id },
             { expiresIn: config.get<string>('security.refreshTokenTtl') },
         );
 
